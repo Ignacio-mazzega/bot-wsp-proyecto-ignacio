@@ -28,4 +28,30 @@ bot.on('qr', (qr) => {
     qrcode.generate(qr, {small: true})
 })
 
+bot.on('message', async message => {
+    
+    const from = message.from
+    const msj = message.body.toLowerCase()
+
+    switch (from) {
+        case `549${numbers.me}@c.us`:
+            const media = MessageMedia.fromFilePath('./src/assets/images/kawaii.jpg');
+            await bot.sendMessage(from, media, {sendMediaAsSticker: true})
+
+            break;
+    
+        default:
+            await message.reply('A desconocidos no')
+            break;
+    }
+})
+
+
+cron.schedule('5 * * * * *', async () => {
+    const media = MessageMedia.fromFilePath('./src/assets/images/kawaii.jpg');
+
+  await bot.sendMessage(`548${numbers.me}@c.us`, "Molestando")
+  await bot.sendMessage(`548${numbers.me}@c.us`, media, {sendMediaAsSticker: true})
+});
+
 bot.initialize();
