@@ -1,0 +1,19 @@
+{
+  "name": "bot-wsp-proyecto-ignacio",
+  "version": "1.0.0",
+  "description": "Proyecto curso bots express",
+  "main": "App.js",
+  "scripts": {
+    "start": "node App.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ignacio Mazzega",
+  "license": "ISC",
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.25.0"
+  },
+  "type": "module"
+}
