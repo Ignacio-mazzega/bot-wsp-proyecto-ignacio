@@ -1,7 +1,8 @@
 import wweb from "whatsapp-web.js";
 import qrcode from "qrcode-terminal";
 import cron from "node-cron";
-import {numbers} from "./data.js";
+import {data} from "./data.js";
+import { getChar } from "./src/modules/rickAndMorty/getCharacter.js";
 
 const dt = JSON.parse(JSON.stringify(data));
 const {Client, LocalAuth, MessageMedia, Poll} = wweb;
@@ -33,8 +34,20 @@ bot.on('message', async message => {
     const from = message.from
     const msj = message.body.toLowerCase()
 
-    switch (from) {
-        case `549${numbers.me}@c.us`:
+    if (msj.includes("/personaje/")) {
+        const {name, status, image} = await getChar(msj)
+        const img = MessageMedia.fromUrl(image)
+        await bot.sendMessage(from, img, {caption: `Personaje: ${name} - *${status}*`})
+    }
+
+    if (msj.includes("/locacion/")) {
+        const {type, residents} = await getChar(msj)
+        const img = MessageMedia.fromUrl(image)
+        await bot.sendMessage(from, img, {caption: `Personaje: ${type} - *${residents}*`})
+    }
+    
+    /* switch (from) {
+        case `549${data.numbers.me}@c.us`:
             const media = MessageMedia.fromFilePath('./src/assets/images/kawaii.jpg');
             await bot.sendMessage(from, media, {sendMediaAsSticker: true})
 
@@ -43,15 +56,15 @@ bot.on('message', async message => {
         default:
             await message.reply('A desconocidos no')
             break;
-    }
+    } */
 })
 
 
-cron.schedule('5 * * * * *', async () => {
+cron.schedule('5,10,15,20,25,30 * * * * *', async () => {
     const media = MessageMedia.fromFilePath('./src/assets/images/kawaii.jpg');
 
-  await bot.sendMessage(`548${numbers.me}@c.us`, "Molestando")
-  await bot.sendMessage(`548${numbers.me}@c.us`, media, {sendMediaAsSticker: true})
+  await bot.sendMessage(`548${data.numbers.me}@c.us`, "Molestando")
+  await bot.sendMessage(`548${data.numbers.me}@c.us`, media, {sendMediaAsSticker: true})
 });
 
 bot.initialize();
