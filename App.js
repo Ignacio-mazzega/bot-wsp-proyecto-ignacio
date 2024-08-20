@@ -3,6 +3,7 @@ import qrcode from "qrcode-terminal";
 import cron from "node-cron";
 import {data} from "./data.js";
 import { getChar } from "./src/modules/rickAndMorty/getCharacter.js";
+import { getData } from "./src/modules/googleAPI/spreedSheet.js";
 
 const dt = JSON.parse(JSON.stringify(data));
 const {Client, LocalAuth, MessageMedia, Poll} = wweb;
@@ -74,8 +75,8 @@ bot.on('message', async message => {
         // const {name, status, image} = await getChar(msj)
         // const img = MessageMedia.fromUrl(image)
         // await bot.sendMessage(from, img, {caption: `Personaje: ${name} - *${status}*`})
-        const fechasDisponibles = fechas.filter(fechas => fechas.disponible)
-        await bot.sendMessage(from, `${fechasDisponibles.map(fecha => fecha.fecha + " - " + fecha.hora + " | está disponible")}`);
+        const fechasDisponibles = await getData()
+        message.reply(`${fechasDisponibles.map(fecha => fecha +"\n")}`)
         await bot.sendMessage(from, "Para reservar, dinos fecha y hora de esta forma: 12/12 - 10:45")
         return
     }

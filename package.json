@@ -11,6 +11,7 @@
   "author": "Ignacio Mazzega",
   "license": "ISC",
   "dependencies": {
+    "googleapis": "^142.0.0",
     "node-cron": "^3.0.3",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.25.0"
