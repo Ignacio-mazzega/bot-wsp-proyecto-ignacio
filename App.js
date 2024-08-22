@@ -68,20 +68,26 @@ bot.on('qr', (qr) => {
 
 bot.on('message', async message => {
     
+    const contacto = message.author
     const from = message.from
     const msj = message.body.toLowerCase()
 
-    if (msj === "horarios") {
-        // const {name, status, image} = await getChar(msj)
-        // const img = MessageMedia.fromUrl(image)
-        // await bot.sendMessage(from, img, {caption: `Personaje: ${name} - *${status}*`})
-        const fechasDisponibles = await getData()
-        message.reply(`${fechasDisponibles.map(fecha => fecha +"\n")}`)
-        await bot.sendMessage(from, "Para reservar, dinos fecha y hora de esta forma: 12/12 - 10:45")
-        return
-    }
+    if(message.from === "120363321987320112@g.us"){
 
-    if (msj.split('-').length === 2) {
+        if (msj === "/horarios") {
+            const fechas = await getData()
+            await message.reply(`${fechas.map(fecha => fecha + "\n")}`)
+            await bot.sendMessage(from, "Para reservar envia: fecha - horario - nombre y apellido... ejemplo: \n 17/08/2024 - 10:45 - Leonardo Avila")
+        }
+    
+        if (msj.split('-').length === 3) {
+            const reserva = msj.split('-')
+            const fechaR = reserva[0].trim()
+            const horario = reserva[1].trim()
+            const nombre = reserva[2].trim()
+            await setReserva(fechaR, horario, nombre)}
+
+    /* if (msj.split('-').length === 2) {
         const reserva = msj.split('-')
         const fechaR = reserva[0].trim()
         const horario = reserva[1].trim()
@@ -103,6 +109,7 @@ bot.on('message', async message => {
         } else {
             await message.reply('Disculpa o la fecha ya está reservada o me pasaste el dato mal')
         }
+    }*/
     }
     
     if (msj.split('/').length === 2) {
@@ -129,7 +136,7 @@ bot.on('message', async message => {
         default:
             await message.reply('A desconocidos no')
             break;
-    } */
+    } */ 
 })
 
 
